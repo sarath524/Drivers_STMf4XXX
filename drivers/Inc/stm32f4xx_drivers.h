@@ -132,6 +132,23 @@ typedef struct{
 
 
 
+
+/*
+ * Peripheral register definition for EXTI
+ */
+
+typedef struct{
+
+	_vo uint32_t EXTI_IMR;			/* Interrupt mask register, Address offset: 0x00 */
+	_vo uint32_t EXTI_EMR;			/* Event mask register, Address offset: 0x04 */
+	_vo uint32_t EXTI_RTSR;			/* Rising trigger selection register, Address offset: 0x08 */
+	_vo uint32_t EXTI_FTSR;			/* Falling trigger selection register, Address offset: 0x0C */
+	_vo uint32_t EXTI_SWIER;		/* Software interrupt event register, Address offset: 0x10 */
+	_vo uint32_t EXTI_PR;			/* Pending register, Address offset: 0x14 */
+
+}EXTI_Regdef_t;
+
+
 /*
  * Peripheral definition macros (peripheral base address typecasted to xxx_RegDef_t )
  */
@@ -147,6 +164,7 @@ typedef struct{
 #define GPIOI 		((GPIO_RegDef_t*)GPIOI_BASEADDR)
 
 #define RCC 		((RCC_Refdef_t*)RCC_BASEADDR)		// RCC base address dereferenced to preprocessor RCC and typecasted with structure RCC_Refdef_t
+#define EXTI		((EXTI_Regdef_t*)EXTI_BASEADDR)
 
 /*
  * Clock enable macros for GPIO.

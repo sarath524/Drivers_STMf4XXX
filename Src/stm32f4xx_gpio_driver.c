@@ -141,12 +141,26 @@ void GPIO_Init(Gpio_Handle_t *pGpioHandle){
 		 */
 
 		temp = (pGpioHandle->GPIO_Pinconfig.GPIO_PinMode << (2 * pGpioHandle->GPIO_Pinconfig.GPIO_PinNumber));/* set the mode of the pin selected,*/
-		pGpioHandle->pGpiox->MODER &= ~(0x3  << pGpioHandle->GPIO_Pinconfig.GPIO_PinNumber);
+		pGpioHandle->pGpiox->MODER &= ~(0x3  << pGpioHandle->GPIO_Pinconfig.GPIO_PinNumber );
 		pGpioHandle->pGpiox->MODER |= temp;
 
 
 	}
 	else{
+		//interrupt mode
+		if(pGpioHandle->GPIO_Pinconfig.GPIO_PinMode == GPIO_MODE_IT_FT){
+
+			//1. configure the FTSR
+			EXTI->EXTI_FTSR |= (1 << pGpioHandle->GPIO_Pinconfig.GPIO_PinNumber );
+			//clear the RTSR
+			EXTI->EXTI_RTSR &= ~(1 << pGpioHandle->GPIO_Pinconfig.GPIO_PinNumber );
+		}
+		else if (pGpioHandle->GPIO_Pinconfig.GPIO_PinMode == GPIO_MODE_IT_RT){
+
+		}
+		else if(pGpioHandle->GPIO_Pinconfig.GPIO_PinMode == GPIO_MODE_IT_RF){
+
+		}
 
 	}
 
