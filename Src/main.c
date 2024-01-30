@@ -18,13 +18,35 @@
 
 #include <stdint.h>
 #include "stm32f4xx_drivers.h"
+#include "stm32f4xx_gpio_driver.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
+#define GPIO_PORT  GPIOA
+
+
 int main(void)
 {
+	GPIO_PeriClockControl(GPIOD, 1);
+	Gpio_Pinconfig_t  ledconfig=
+	{
+			GPIO_PIN_NO_12,
+			GPIO_MODE_OUT,
+			GPIO_OP_SP_LOW,
+			GPIO_NO_PU,
+			GPIO_OP_TYPE_PP
+	};
+	Gpio_Handle_t  portconfig = {
+			GPIOD,
+			ledconfig
+	};
+
+	GPIO_Init(&portconfig);
+
+	GPIO_WriteTOOutputPin(GPIOD,GPIO_PIN_NO_12, 1 );
+
     /* Loop forever */
 	for(;;);
 }
